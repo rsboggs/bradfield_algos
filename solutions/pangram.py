@@ -25,3 +25,18 @@ def is_pangram_1(text):
       return False
 
   return current_index == end_index
+
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+def is_pangram_2(text):
+  if len(text) < 26:
+    return False
+
+  chars = [0] * 26
+  for char in text:
+    char_int = ord(char) - 97
+    if char_int < 0 or char_int > 25:
+      return False
+    chars[char_int] += 1
+
+  return all(chars)
