@@ -43,3 +43,9 @@ def is_pangram_2(text):
       chars[char_int] += 1
 
   return all(chars)
+
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+def is_pangram_3(text):
+  letters = "abcdefghijklmnopqrstuvwxyz"
+  return not (set(letters) - set(text))
