@@ -14,5 +14,9 @@ class PanagramTest(unittest.TestCase):
     self.assertEqual(pangram.is_pangram_1("abcdefghijklmnopqrstuvwxzyaaaaazzzzeee"), True)
     self.assertEqual(pangram.is_pangram_2("abcdefghijklmnopqrstuvwxzyaaaaazzzzeee"), True)
 
+  def test_valid_with_spaces_text(self):
+    self.assertEqual(pangram.is_pangram_1("the quick brown fox jumps over the lazy dog"), True)
+    self.assertEqual(pangram.is_pangram_2("the quick brown fox jumps over the lazy dog"), True)
+
 if __name__ == '__main__':
   unittest.main()

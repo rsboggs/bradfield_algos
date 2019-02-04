@@ -21,6 +21,8 @@ def is_pangram_1(text):
     elif char == chr(next_index):
       current_index += 1
       next_index += 1
+    elif ord(char) < start_index or ord(char) > end_index:
+      pass
     else:
       return False
 
@@ -36,7 +38,8 @@ def is_pangram_2(text):
   for char in text:
     char_int = ord(char) - 97
     if char_int < 0 or char_int > 25:
-      return False
-    chars[char_int] += 1
+      pass
+    else:
+      chars[char_int] += 1
 
   return all(chars)
