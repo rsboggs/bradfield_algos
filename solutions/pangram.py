@@ -37,9 +37,7 @@ def is_pangram_2(text):
   chars = [0] * 26
   for char in text:
     char_int = ord(char) - 97
-    if char_int < 0 or char_int > 25:
-      pass
-    else:
+    if char_int >= 0 and char_int <= 25:
       chars[char_int] += 1
 
   return all(chars)
