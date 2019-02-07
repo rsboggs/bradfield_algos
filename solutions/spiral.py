@@ -5,7 +5,8 @@
 import pdb
 
 def create_spiral_matrix(n):
-  current_direction = "right"
+  # 0 is right, 1 is down, etc
+  current_direction = 0
   counter = 1
   row_index = 0
   col_index = 0
@@ -16,29 +17,29 @@ def create_spiral_matrix(n):
   counter += 1
 
   while counter < n * n + 1:
-    if current_direction == "right":
+    if current_direction == 0:
       if empty_valid_spot(matrix, row_index, col_index + 1):
         col_index += 1
       else:
-        current_direction = "down"
+        current_direction += 1
         continue
-    elif current_direction == "down":
+    elif current_direction == 1:
       if empty_valid_spot(matrix, row_index + 1, col_index):
         row_index += 1
       else:
-        current_direction = "left"
+        current_direction += 1
         continue
-    elif current_direction == "left":
+    elif current_direction == 2:
       if empty_valid_spot(matrix, row_index, col_index - 1):
         col_index -= 1
       else:
-        current_direction = "up"
+        current_direction += 1
         continue
-    elif current_direction == "up":
+    elif current_direction == 3:
       if empty_valid_spot(matrix, row_index - 1, col_index):
         row_index -= 1
       else:
-        current_direction = "right"
+        current_direction = 0
         continue
 
     matrix[row_index][col_index] = counter
