@@ -26,13 +26,12 @@ class Queue(object):
     return self.size() == 0
 
   def enqueue(self, item):
-    while not self._removal_stack.is_empty():
-      self._adding_stack.push(self._removal_stack.pop())
     self._adding_stack.push(item)
 
   def dequeue(self):
-    while not self._adding_stack.is_empty():
-      self._removal_stack.push(self._adding_stack.pop())
+    if self._removal_stack.is_empty():
+      while not self._adding_stack.is_empty():
+        self._removal_stack.push(self._adding_stack.pop())
     return self._removal_stack.pop()
 
   def size(self):
