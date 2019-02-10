@@ -10,6 +10,8 @@ def create_spiral_matrix(n):
   counter = 1
   row_index = 0
   col_index = 0
+  row_indexes = [0, 1, 0, -1]
+  col_indexes = [1, 0, -1, 0]
 
   matrix = [[0 for x in range(n)] for y in range(n)]
 
@@ -17,30 +19,15 @@ def create_spiral_matrix(n):
   counter += 1
 
   while counter < n * n + 1:
-    if current_direction == 0:
-      if empty_valid_spot(matrix, row_index, col_index + 1):
-        col_index += 1
-      else:
-        current_direction += 1
-        continue
-    elif current_direction == 1:
-      if empty_valid_spot(matrix, row_index + 1, col_index):
-        row_index += 1
-      else:
-        current_direction += 1
-        continue
-    elif current_direction == 2:
-      if empty_valid_spot(matrix, row_index, col_index - 1):
-        col_index -= 1
-      else:
-        current_direction += 1
-        continue
-    elif current_direction == 3:
-      if empty_valid_spot(matrix, row_index - 1, col_index):
-        row_index -= 1
-      else:
-        current_direction = 0
-        continue
+    proposed_col_index = col_index + col_indexes[current_direction]
+    proposed_row_index = row_index + row_indexes[current_direction]
+
+    if empty_valid_spot(matrix, proposed_row_index, proposed_col_index):
+      col_index = proposed_col_index
+      row_index = proposed_row_index
+    else:
+      current_direction = (current_direction + 1) % 4
+      continue
 
     matrix[row_index][col_index] = counter
     counter += 1
