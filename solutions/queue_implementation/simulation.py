@@ -58,6 +58,7 @@ def run_simulation(queue_implementation, p_enqueue=0.5, p_dequeue=0.5, duration=
     if random() < p_enqueue:
       queue.enqueue((now, msg))
       num_enqueues += 1
+
       max_queue_size = max(max_queue_size, queue.size())
 
     if random() < p_dequeue:

@@ -5,15 +5,19 @@ class PythonListQueue(object):
   def __init__(self):
     self._items = []
 
+  # O(1)
   def enqueue(self, item):
     self._items.append(item)
 
+  # O(n)
   def dequeue(self):
     return self._items.pop(0)
 
+  # O(1)
   def size(self):
     return len(self._items)
 
+  # O(1)
   def is_empty(self):
     return len(self._items) == 0
 
@@ -94,19 +98,60 @@ class RingBufferQueue(object):
   these times, instead.
   """
   def __init__(self):
-    pass
+    self._buffer_size = 2
+    self._buffer = [None] * self._buffer_size
+    self._start_index = 0
+    self._end_index = 0
 
+  # O(1)
   def enqueue(self, item):
-    pass
+    if self._next_index(self._end_index) == self._start_index:
+      self._resize()
+    self._buffer[self._end_index] = item
+    self._end_index = self._next_index(self._end_index)
 
+  # O(1)
   def dequeue(self):
-    pass
+    value = self._buffer[self._start_index]
+    self._start_index = self._next_index(self._start_index)
+    return value
 
+  # O(1)
   def size(self):
-    pass
+    if self._end_index > self._start_index:
+      return self._end_index - self._start_index
+    else:
+      return self._end_index + (self._buffer_size - self._start_index)
 
+  # O(1)
   def is_empty(self):
-    pass
+    return self._start_index == self._end_index
+
+  # Helpers
+  def _next_index(self, index):
+    return (index + 1) % self._buffer_size
+
+  def _resize(self):
+    current_buffer_size = self._buffer_size
+    current_buffer = self._buffer
+    self._buffer_size = current_buffer_size * 2
+    self._buffer = [None] * self._buffer_size
+    new_index = 0
+    if self._end_index > self._start_index:
+      for index in range(self._start_index, self._end_index):
+        self._buffer[new_index] = current_buffer[index]
+        new_index += 1
+    else:
+      for index in range(self._start_index, current_buffer_size):
+        self._buffer[new_index] = current_buffer[index]
+        new_index += 1
+      for index in range(0, self._end_index):
+        self._buffer[new_index] = current_buffer[index]
+        new_index += 1
+    self._start_index = 0
+    self._end_index = current_buffer_size - 1
+
+
 
 
 QUEUE_CLASSES = (
