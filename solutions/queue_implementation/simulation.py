@@ -19,6 +19,7 @@ def run_tests(queue_implementation):
   assert queue.dequeue() == 1
   queue.enqueue(3)
   queue.enqueue(4)
+  assert queue.size() == 3
   assert queue.dequeue() == 2
   assert queue.dequeue() == 3
   assert queue.dequeue() == 4

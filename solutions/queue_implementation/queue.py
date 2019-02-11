@@ -46,6 +46,7 @@ class LinkedListQueue(object):
   def __init__(self):
     self._head = None
     self._tail = None
+    self._node_count = 0
 
   # O(1)
   def enqueue(self, item):
@@ -56,6 +57,7 @@ class LinkedListQueue(object):
       former_head = self._head
       self._head = LinkedListNode(item, None, former_head)
       former_head.prev = self._head
+    self._node_count += 1
 
   # O(1)
   def dequeue(self):
@@ -66,16 +68,12 @@ class LinkedListQueue(object):
 
     if self._tail != None:
       self._tail.next = None
+    self._node_count -= 1
     return tail_value
 
-  # O(n)
+  # O(1)
   def size(self):
-    current_node = self._head
-    counter = 0
-    while current_node:
-      counter += 1
-      current_node = current_node.next
-    return counter
+    return self._node_count
 
   # O(1)
   def is_empty(self):
@@ -103,7 +101,7 @@ class RingBufferQueue(object):
     self._start_index = 0
     self._end_index = 0
 
-  # O(1)
+  # O(1) ("amortized" because of resize)
   def enqueue(self, item):
     if self._next_index(self._end_index) == self._start_index:
       self._resize()
