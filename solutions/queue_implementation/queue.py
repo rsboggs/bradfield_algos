@@ -134,21 +134,16 @@ class RingBufferQueue(object):
     current_buffer = self._buffer
     self._buffer_size = current_buffer_size * 2
     self._buffer = [None] * self._buffer_size
-    new_index = 0
+
     if self._end_index > self._start_index:
-      for index in range(self._start_index, self._end_index):
-        self._buffer[new_index] = current_buffer[index]
-        new_index += 1
+      self._buffer[:current_buffer_size] = current_buffer
     else:
-      for index in range(self._start_index, current_buffer_size):
-        self._buffer[new_index] = current_buffer[index]
-        new_index += 1
-      for index in range(0, self._end_index):
-        self._buffer[new_index] = current_buffer[index]
-        new_index += 1
+      first_width = current_buffer_size - self._start_index
+      self._buffer[:first_width] = current_buffer[self._start_index:current_buffer_size]
+      self._buffer[first_width:current_buffer_size] = current_buffer[0:(self._end_index + 1)]
+
     self._start_index = 0
     self._end_index = current_buffer_size - 1
-
 
 
 
