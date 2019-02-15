@@ -1,3 +1,5 @@
+from collections import deque
+
 class TreeNode:
   def __init__(self, x):
     self.val = x
@@ -9,10 +11,11 @@ class TreeNode:
     if not self:
       return 0
 
-    nodes = [(self, 1)]
+    nodes = deque()
+    nodes.append((self, 1))
+
     while len(nodes) > 0:
-      # Would use linked list if want to boost performance of this operation
-      current_node, current_count = nodes.pop(0)
+      current_node, current_count = nodes.popleft()
       if current_node.left == None and current_node.right == None:
         return current_count
 
