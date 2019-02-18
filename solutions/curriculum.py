@@ -3,9 +3,13 @@ def is_possible_curriculum(remaining_classes, enrolled_classes = {}):
     return True
 
   for klass in remaining_classes:
+    meets_prereq = True
     for prereq in klass["prereqs"]:
       if prereq not in enrolled_classes:
-        return False
+        meets_prereq = False
+        break
+    if meets_prereq == False:
+      continue
 
     class_title = klass["title"]
     enrolled_classes[class_title] = True
@@ -19,3 +23,5 @@ def is_possible_curriculum(remaining_classes, enrolled_classes = {}):
 
     # Undo work on this path so don't pollute other recursive paths
     del enrolled_classes[class_title]
+
+  return False

@@ -84,5 +84,30 @@ class CurriculumTest(unittest.TestCase):
     ]
     self.assertTrue(curriculum.is_possible_curriculum(classes))
 
+  def test_failing_other_case(self):
+    classes = [
+      {
+        "title": "Computer Arch",
+        "prereqs": [],
+      },
+      {
+        "title": "Languages",
+        "prereqs": [],
+      },
+      {
+        "title": "Algos",
+        "prereqs": ["Other2"],
+      },
+      {
+        "title": "Other",
+        "prereqs": ["Algos"],
+      },
+      {
+        "title": "Other2",
+        "prereqs": ["Other"],
+      },
+    ]
+    self.assertFalse(curriculum.is_possible_curriculum(classes))
+
 if __name__ == "__main__":
   unittest.main()
