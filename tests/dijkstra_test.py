@@ -92,7 +92,5 @@ class DijkstraTest(unittest.TestCase):
       expected
     )
 
-
-
 if __name__ == "__main__":
   unittest.main()

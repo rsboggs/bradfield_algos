@@ -2,6 +2,7 @@ import heapq
 from collections import defaultdict
 
 def network_delay_time(times, N, K):
+  REMOVED = -1
   graph = defaultdict(dict)
   uniq_values = set()
 
@@ -24,17 +25,28 @@ def network_delay_time(times, N, K):
 
   while len(priority_queue) > 0:
     _queue_distance, node_source = heapq.heappop(priority_queue)
+    # Handle removed nodes
+    if node_source == REMOVED:
+      continue
     neighbors = graph[node_source]
 
     for neighbor_value, distance in neighbors.items():
       if node_source == K and distances[neighbor_value] > distance:
         distances[neighbor_value] = distance
         if neighbor_value in entries:
-          entries[neighbor_value][0] = distance
+          # Remove existing value
+          entries[neighbor_value][1] = REMOVED
+          bucket = [distance, neighbor_value]
+          heapq.heappush(priority_queue, bucket)
+          entries[neighbor_value] = bucket
       elif distances[node_source] != float("inf") and distances[neighbor_value] > distances[node_source] + distance:
         distances[neighbor_value] = distances[node_source] + distance
         if neighbor_value in entries:
-          entries[neighbor_value][0] = distances[node_source] + distance
+          # Remove existing value
+          entries[neighbor_value][1] = REMOVED
+          bucket = [distances[node_source] + distance, neighbor_value]
+          heapq.heappush(priority_queue, bucket)
+          entries[neighbor_value] = bucket
 
   values = distances.values()
   if len(values) != N:
