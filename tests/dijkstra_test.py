@@ -22,7 +22,6 @@ class DijkstraTest(unittest.TestCase):
       expected
     )
 
-
   def test_simple_several_points(self):
     times = [[2,1,1],[2,3,1],[3,4,1]]
     N = 4
