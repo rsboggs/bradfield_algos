@@ -26,7 +26,7 @@ def network_delay_time(times, N, K):
     for neighbor_value, distance in neighbors.items():
       if node_source == K:
         distances[neighbor_value] = distance
-      elif distances[node_source] != float("inf"):
+      elif distances[node_source] != float("inf") and distances[neighbor_value] > distances[node_source] + distance:
         distances[neighbor_value] = distances[node_source] + distance
 
   maximum = max(distances.values())

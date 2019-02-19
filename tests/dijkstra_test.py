@@ -32,5 +32,15 @@ class DijkstraTest(unittest.TestCase):
       expected
     )
 
+  def test_another_case(self):
+    times = [[1,2,1],[2,3,2],[1,3,2]]
+    N = 3
+    K = 1
+    expected = 2
+    self.assertEqual(
+      dijkstra.network_delay_time(times, N, K),
+      expected
+    )
+
 if __name__ == "__main__":
   unittest.main()
