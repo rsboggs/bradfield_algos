@@ -3,13 +3,16 @@
 # move only down & to right
 def number_paths(h, w, grid):
   memo = [[1] * w for _ in range(0, h)]
+
   for i, row, in enumerate(memo):
     for j, _ in enumerate(row):
+      if blocked_spot(grid, i, j) or (i == 0 and memo[i][j - 1] == 0) or (j == 0 and memo[i - 1][j] == 0):
+        memo[i][j] = 0
+        continue
       if i == 0 or j == 0:
         continue
-      first_prior = 0 if blocked_spot(grid, i - 1, j) else memo[i - 1][j]
-      second_prior = 0 if blocked_spot(grid, i, j - 1) else memo[i][j - 1]
-      memo[i][j] = first_prior + second_prior
+      memo[i][j] = memo[i - 1][j] + memo[i][j - 1]
+
   return memo[-1][-1]
 
 def blocked_spot(grid, i, j):
