@@ -5,7 +5,7 @@ def number_paths(h, w, grid):
   memo = [[1] * w for _ in range(0, h)]
   for i, row, in enumerate(memo):
     for j, _ in enumerate(row):
-      if i == 0 or j == 0 or blocked_spot(grid, i, j):
+      if i == 0 or j == 0:
         continue
       first_prior = 0 if blocked_spot(grid, i - 1, j) else memo[i - 1][j]
       second_prior = 0 if blocked_spot(grid, i, j - 1) else memo[i][j - 1]
