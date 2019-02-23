@@ -1,3 +1,5 @@
+MOD = 10 ** 9 + 7
+
 # h, w place trying to reach on grid
 # top left of grid is 1,1
 # move only down & to right
@@ -11,7 +13,7 @@ def number_paths(h, w, grid):
         continue
       if i == 0 or j == 0:
         continue
-      memo[i][j] = memo[i - 1][j] + memo[i][j - 1]
+      memo[i][j] = (memo[i - 1][j] + memo[i][j - 1]) % MOD
 
   return memo[-1][-1]
 
